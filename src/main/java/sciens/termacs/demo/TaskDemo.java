@@ -10,7 +10,7 @@ public final class TaskDemo {
         app.setTheme(Theme.DARK);
 
         Window win = app.createWindow("termacs — Task Demo");
-        win.resize(64, 20);
+        win.resize(0, 0);   // {0,0} ⇒ fill the whole terminal
 
         MenuBar mb = win.setMenuBar();
         Menu file = mb.addMenu("File");
