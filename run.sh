@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 : "${JAVA_HOME:=/usr/lib/jvm/java-25-openjdk-amd64}"
 exec "$JAVA_HOME/bin/java" \
-    -Dtermacs.jni="$ROOT/termacs-core/build/libtermacsjni.so" \
+    -Dtermacs.jni="$ROOT/termacs-java/build/libtermacsjni.so" \
     --enable-native-access=ALL-UNNAMED \
     -cp "$ROOT/termacs-java/build/classes:$ROOT/termacs-java-demo/build/classes" \
     sciens.termacs.demo.TaskDemo
