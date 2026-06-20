@@ -1,9 +1,14 @@
 # termacs-java-demo
 
-A small **task-list demo** for termacs — exercises the spine of the API: a menu
-bar, nested layout, several widgets, signals, async dialogs, a timer, theming,
-and tab focus, running on a real Linux terminal. It also doubles as a manual
-smoke test ("does it launch and paint?").
+Demos for termacs, running on a real Linux terminal:
+
+- **`WidgetGallery`** *(default)* — showcases the full P5 widget set (§5.10):
+  button variants, `CheckBox`, `OptionGroup` (radio + multi), `ComboBox`,
+  `ProgressBar`, `TextArea` in a `Frame`, and a `ScrollView`, plus menus,
+  async dialogs, a live clock, and a Dark/Light theme toggle.
+- **`TaskDemo`** — the original small task-list demo (the spine of the API).
+
+Each doubles as a manual smoke test ("does it launch and paint?").
 
 Depends only on the [termacs-java](https://github.com/nidwe72/termacs-java)
 binding (which in turn pulls in termacs-core).
