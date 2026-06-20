@@ -26,3 +26,14 @@ java -Dtermacs.jni="$JAVA/build/libtermacsjni.so" \
 The window fills the whole terminal and reflows on resize. Add a task with the
 input + **Add**/Enter; Enter on a row removes it (confirm dialog); quit via
 **File ▸ Quit**.
+
+## Headless test
+
+`tools/run_demo_pty.py` launches the demo on an 80×24 pseudo-terminal, types a
+task, drives File ▸ Quit, and asserts the rendered frames — a self-contained
+smoke test (exit 0 = pass). It finds the binding at the sibling `../termacs-java`
+by default (override with `$TERMACS_JAVA` / `$TERMACS_JNI`):
+
+```bash
+python3 tools/run_demo_pty.py
+```
