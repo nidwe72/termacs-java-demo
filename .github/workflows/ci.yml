@@ -1,0 +1,26 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: demo
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install build deps
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build libncursesw5-dev
+      - name: Build the termacs-java binding (pulls termacs-core v0.1.0)
+        run: |
+          git clone https://github.com/nidwe72/termacs-java.git binding
+          cmake -S binding -B binding/build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build binding/build
+          javac --release 17 -d binding/build/classes binding/src/main/java/sciens/termacs/*.java
+      - name: Compile demo against the binding
+        run: javac --release 17 -cp binding/build/classes -d demo/build/classes demo/src/main/java/sciens/termacs/demo/TaskDemo.java
