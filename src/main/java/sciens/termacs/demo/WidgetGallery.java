@@ -119,7 +119,7 @@ public final class WidgetGallery {
         app.startTimer(300, () -> { p[0] = (p[0] + 4) % 104; pb.setValue(Math.min(p[0], 100)); });
         app.startTimer(1000, () -> status.setRightText(LocalTime.now().withNano(0).toString()));
 
-        status.setText("Tab to move focus, Space/Enter to activate");
+        status.setText("Tab=focus · in fields: type, Shift/Ctrl+arrows select, Ctrl+C/X/V · F10=menu");
         win.show();
         input.setFocus();
         System.exit(app.run());
