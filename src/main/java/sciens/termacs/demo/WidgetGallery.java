@@ -9,8 +9,10 @@ import java.time.LocalTime;
 public final class WidgetGallery {
     public static void main(String[] args) {
         Application app = new Application();
-        final Theme[] theme = { Theme.DARK };
+        final Theme[] theme = { Theme.PHOSPHOR_HARMONY };
         app.setTheme(theme[0]);
+        final ControlStyle[] cstyle = { ControlStyle.BRACKETS };
+        app.setControlStyle(cstyle[0]);
 
         Window win = app.createWindow("termacs — Widget Gallery");
         win.resize(0, 0);
@@ -39,7 +41,7 @@ public final class WidgetGallery {
         Button info    = brow.addButton("Info");
         Button confirm = brow.addButton("Confirm");
         Button themeB  = brow.addButton("Theme");
-        Button quiet   = brow.addButton("Quiet");   quiet.setVariant(ButtonVariant.QUIET);
+        Button quiet   = brow.addButton("Style");   quiet.setVariant(ButtonVariant.QUIET);
         Button quit    = brow.addButton("Quit");    quit.setVariant(ButtonVariant.DANGER);
 
         // checkbox
@@ -100,9 +102,19 @@ public final class WidgetGallery {
         info.onClicked(() -> app.dialogs().info(win, "termacs Widget Gallery\nAll P5 controls, live."));
         confirm.onClicked(() -> app.dialogs().confirm(win, "Are you sure?",
             yes -> status.setText(yes ? "confirmed" : "cancelled")));
-        Runnable toggle = () -> { theme[0] = (theme[0] == Theme.DARK) ? Theme.LIGHT : Theme.DARK; app.setTheme(theme[0]); status.setText("theme: " + theme[0]); };
+        Theme[] themeOrder = { Theme.PHOSPHOR_HARMONY, Theme.DARK, Theme.LIGHT };
+        Runnable toggle = () -> {
+            int i = (java.util.Arrays.asList(themeOrder).indexOf(theme[0]) + 1) % themeOrder.length;
+            theme[0] = themeOrder[i]; app.setTheme(theme[0]); status.setText("theme: " + theme[0]);
+        };
         themeB.onClicked(toggle);
-        quiet.onClicked(() -> status.setText("quiet clicked"));
+        // live control-style switch (§5.12): Plain ▸ Brackets ▸ Framed
+        ControlStyle[] styleOrder = { ControlStyle.PLAIN, ControlStyle.BRACKETS, ControlStyle.FRAMED };
+        Runnable cycleStyle = () -> {
+            int i = (java.util.Arrays.asList(styleOrder).indexOf(cstyle[0]) + 1) % styleOrder.length;
+            cstyle[0] = styleOrder[i]; app.setControlStyle(cstyle[0]); status.setText("style: " + cstyle[0]);
+        };
+        quiet.onClicked(cycleStyle);
         quit.onClicked(() -> app.dialogs().confirm(win, "Quit the gallery?", yes -> { if (yes) app.quit(0); }));
 
         remember.onToggled(on -> status.setText("remember: " + on));
@@ -111,7 +123,8 @@ public final class WidgetGallery {
         prio.onSelectionChanged(i -> status.setText("priority: " + prio.selectedText()));
 
         file.addItem("Quit", () -> app.dialogs().confirm(win, "Quit?", yes -> { if (yes) app.quit(0); }));
-        view.addItem("Toggle theme", toggle);
+        view.addItem("Cycle theme", toggle);
+        view.addItem("Cycle control style", cycleStyle);
         help.addItem("About", () -> app.dialogs().info(win, "termacs Widget Gallery"));
 
         // animated progress + clock

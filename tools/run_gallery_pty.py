@@ -57,7 +57,7 @@ checks = {
     "title":     "Widget Gallery" in plain,
     "buttons":   "[ Info ]" in plain and "[ Quit ]" in plain,
     "checkbox":  "Remember me" in plain,
-    "radio":     "(*) M" in plain,
+    "radio":     "◉ M" in plain,
     "multi":     "Bold" in plain and "Italic" in plain,
     "combo":     "Choose..." in plain,
     "progress":  "%" in plain,

@@ -7,7 +7,8 @@ import java.time.LocalTime;
 public final class TaskDemo {
     public static void main(String[] args) {
         Application app = new Application();          // real terminal (tvision)
-        app.setTheme(Theme.DARK);
+        app.setTheme(Theme.PHOSPHOR_HARMONY);         // green/amber/gray (§5.6)
+        app.setControlStyle(ControlStyle.BRACKETS);   // §5.12
 
         Window win = app.createWindow("termacs — Task Demo");
         win.resize(0, 0);   // {0,0} ⇒ fill the whole terminal
